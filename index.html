@@ -56,6 +56,7 @@ body.admin .bar{display:block}
 #save{display:none}#view.editing #save{display:inline-block}
 #frame{border:0;width:100%;height:100%}
 @media(max-width:720px){#view.editing .panes{grid-template-columns:1fr;grid-template-rows:1fr 1fr}#code{border-right:0;border-bottom:1px solid var(--line)}}
+#cidbox{display:flex;gap:.5rem;flex-wrap:wrap}#cidbox[hidden]{display:none}#cid{flex:1 1 280px}
 #toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:.6rem 1.1rem;border-radius:8px;display:none;z-index:20;max-width:90vw}
 </style>
 </head>
@@ -69,6 +70,7 @@ body.admin .bar{display:block}
 
 <div class="wrap">
   <nav><span class="logo">Sci<b>Phy</b></span><button id="mg">Owner sign in</button></nav>
+  <div id="cidbox" hidden><input id="cid" placeholder="Paste your Google Client ID" aria-label="Google OAuth Client ID" autocomplete="off"><button class="pri" id="cgo">Continue</button></div>
   <h1>SciPhy lessons</h1>
   <p class="lead">Choose a subject, then open a lesson. Each one runs right here in your browser.</p>
   <input type="search" id="q" placeholder="Search lessons" aria-label="Search lessons">
@@ -160,16 +162,22 @@ $('q').oninput = render;
 $('upcat').innerHTML = Object.keys(CATS).map(c => `<option>${c}</option>`).join(''); $('upcat').value = 'Other';
 
 /* ---- owner sign in ---- */
-$('mg').onclick = () => {
-  const id = CFG.CLIENT_ID || localStorage.getItem('sciphy_cid') || prompt('Paste your Google OAuth Client ID');
-  if (!id) return;
-  if (!window.google) return toast('Google sign-in is still loading. Try again.');
+function signIn(id) {
+  if (!window.google) return toast('Google sign-in is still loading. Try again in a moment.');
   localStorage.setItem('sciphy_cid', id);
-  google.accounts.oauth2.initTokenClient({client_id: id, scope: SCOPE, callback: r => {
-    if (r.error) return toast('Sign-in failed: ' + r.error);
-    token = r.access_token; document.body.classList.add('admin'); $('mg').hidden = true; start();
-  }}).requestAccessToken();
+  google.accounts.oauth2.initTokenClient({client_id: id, scope: SCOPE,
+    callback: r => {
+      if (r.error) return toast('Sign-in failed: ' + (r.error_description || r.error));
+      token = r.access_token; document.body.classList.add('admin'); $('cidbox').hidden = true; $('mg').hidden = true; start();
+    },
+    error_callback: e => toast(e.type === 'popup_failed_to_open' ? 'The sign-in popup was blocked. Allow popups for this site and try again.' : 'Sign-in was closed before it finished.')
+  }).requestAccessToken();
+}
+$('mg').onclick = () => {
+  const id = CFG.CLIENT_ID || localStorage.getItem('sciphy_cid');
+  if (id) signIn(id); else { $('cidbox').hidden = false; $('cid').focus(); }
 };
+$('cgo').onclick = () => { const id = $('cid').value.trim(); if (id) signIn(id); else toast('Paste your Client ID first.'); };
 function signOut() {
   if (token && window.google) google.accounts.oauth2.revoke(token);
   token = null; document.body.classList.remove('admin'); $('mg').hidden = false; start();
