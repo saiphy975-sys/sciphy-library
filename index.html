@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SciPhy HTML Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+:root{--ink:#12203a;--paper:#f3f6fa;--card:#fff;--line:#d5deea;--mu:#5d6b85;--blue:#2454ff;--amber:#f5a524;--red:#d33a3a}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.5 "Schibsted Grotesk",system-ui,sans-serif;color:var(--ink);background:var(--paper)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:.45rem .9rem}
+button:hover{border-color:var(--blue)}
+button.pri{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:600}
+button.del:hover{border-color:var(--red);color:var(--red)}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+input,select{border:1px solid var(--line);border-radius:8px;padding:.5rem .7rem;background:#fff}
+header{background:var(--ink);color:#fff;padding:1rem clamp(1rem,4vw,3rem);display:flex;justify-content:space-between;align-items:center;gap:1rem}
+header h1{margin:0;font-size:1.35rem;font-weight:800;letter-spacing:-.01em}
+header h1 span{color:var(--amber)}
+header button{background:transparent;color:#fff;border-color:#4a5b7d}
+.grid-bg{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:28px 28px}
+main{max-width:1100px;margin:0 auto;padding:1.5rem clamp(1rem,4vw,2rem) 4rem}
+#login{max-width:520px;margin:4rem auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:2rem}
+#login h2{margin:0 0 .5rem;font-size:1.8rem;line-height:1.15}
+#login p{color:var(--mu);margin:.5rem 0 1.2rem}
+#login input{width:100%;margin-bottom:.8rem}
+.bar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:1rem}
+.bar input[type=search]{flex:1 1 220px}
+#drop{border:2px dashed var(--mu);border-radius:12px;padding:1.4rem;text-align:center;color:var(--mu);background:rgba(255,255,255,.75)}
+#drop.over{border-color:var(--blue);color:var(--blue);background:#fff}
+.tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:1rem 0}
+.tabs button{border-radius:99px;padding:.3rem .9rem}
+.tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+#list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.9rem}
+.item{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1rem;display:flex;flex-direction:column;gap:.35rem}
+.item b{overflow-wrap:anywhere}
+.item small{color:var(--mu)}
+.item .acts{display:flex;gap:.4rem;margin-top:.5rem;flex-wrap:wrap}
+.item .acts button{padding:.25rem .7rem;font-size:.9rem}
+.empty{grid-column:1/-1;text-align:center;color:var(--mu);padding:2rem}
+#modal{position:fixed;inset:0;background:rgba(18,32,58,.7);display:none;padding:2vh 2vw;z-index:10}
+#modal.show{display:block}
+.win{background:var(--card);border-radius:12px;height:100%;display:flex;flex-direction:column;overflow:hidden}
+.win .top{display:flex;gap:.6rem;align-items:center;padding:.7rem 1rem;border-bottom:1px solid var(--line)}
+.win .top b{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.panes{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0}
+.panes textarea{border:0;border-right:1px solid var(--line);padding:1rem;resize:none;font:13px/1.5 ui-monospace,Consolas,monospace;tab-size:2;min-width:0}
+.panes iframe{border:0;width:100%;height:100%;background:#fff}
+@media(max-width:720px){.panes{grid-template-columns:1fr;grid-template-rows:1fr 1fr}.panes textarea{border-right:0;border-bottom:1px solid var(--line)}}
+#toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:.6rem 1.1rem;border-radius:8px;display:none;z-index:20;max-width:90vw}
+</style>
+</head>
+<body>
+<header>
+  <h1>Sci<span>Phy</span> HTML Library</h1>
+  <button id="out" hidden>Sign out</button>
+</header>
+
+<section id="login" class="grid-bg" style="background-color:#fff">
+  <h2>Your lessons, stored in your Google Drive</h2>
+  <p>Sign in to open the SciPhy HTML Library folder in Drive. Paste your OAuth Client ID once; this browser remembers it. It is safe to share, unlike a client secret, and no secret is needed here.</p>
+  <input id="cid" placeholder="123456789-abc.apps.googleusercontent.com" aria-label="Google OAuth Client ID" autocomplete="off">
+  <button class="pri" id="in">Sign in with Google</button>
+</section>
+
+<main id="app" hidden>
+  <div class="bar">
+    <input type="search" id="q" placeholder="Search by file name" aria-label="Search files">
+    <label>Upload to <select id="upcat"></select></label>
+    <button class="pri" id="pick">Upload HTML files</button>
+    <button id="new">New file</button>
+    <button id="ref">Refresh</button>
+    <input type="file" id="file" accept=".html,.htm,text/html" multiple hidden>
+  </div>
+  <div id="drop" class="grid-bg">Drop .html files here to save them to Drive</div>
+  <div class="tabs" id="tabs"></div>
+  <div id="list"></div>
+</main>
+
+<div id="modal" role="dialog" aria-modal="true" aria-label="Edit and preview">
+  <div class="win">
+    <div class="top">
+      <b id="mtitle"></b>
+      <button class="pri" id="save">Save to Drive</button>
+      <button id="close">Close</button>
+    </div>
+    <div class="panes">
+      <textarea id="code" spellcheck="false" aria-label="HTML source"></textarea>
+      <iframe id="frame" sandbox="allow-scripts allow-forms allow-modals" title="Live preview"></iframe>
+    </div>
+  </div>
+</div>
+<div id="toast" role="status"></div>
+
+<script>
+// Use 'https://www.googleapis.com/auth/drive' instead if the library must also show files
+// you uploaded to Drive by hand. drive.file only sees files this app creates.
+const SCOPE = 'https://www.googleapis.com/auth/drive.file';
+const ROOT = 'SciPhy HTML Library';
+const CATS = ['Mathematics','Physics','Chemistry','Biology','Quizzes','Projects','Other'];
+const API = 'https://www.googleapis.com/drive/v3', UP = 'https://www.googleapis.com/upload/drive/v3';
+const $ = id => document.getElementById(id);
+let token = null, tc = null, folders = {}, files = [], cat = 'All', cur = null, t1;
+
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function toast(m){ const t=$('toast'); t.textContent=m; t.style.display='block'; clearTimeout(t1); t1=setTimeout(()=>t.style.display='none',3500); }
+
+async function api(url, opt = {}) {
+  const r = await fetch(url, {...opt, headers: {Authorization: 'Bearer ' + token, ...(opt.headers || {})}});
+  if (r.status === 401) { signOut(); throw new Error('Session expired. Sign in again.'); }
+  if (!r.ok) throw new Error('Drive error ' + r.status + ': ' + (await r.text()).slice(0, 160));
+  return r;
+}
+
+/* ---- sign in ---- */
+$('cid').value = localStorage.getItem('sciphy_cid') || '';
+$('in').onclick = () => {
+  const id = $('cid').value.trim();
+  if (!id) return toast('Paste your OAuth Client ID first.');
+  if (!window.google) return toast('Google sign-in is still loading. Try again in a moment.');
+  localStorage.setItem('sciphy_cid', id);
+  tc = google.accounts.oauth2.initTokenClient({
+    client_id: id, scope: SCOPE,
+    callback: async r => {
+      if (r.error) return toast('Sign-in failed: ' + r.error);
+      token = r.access_token;
+      $('login').hidden = true; $('app').hidden = false; $('out').hidden = false;
+      try { await init(); } catch (e) { toast(e.message); }
+    }
+  });
+  tc.requestAccessToken();
+};
+function signOut() {
+  if (token && window.google) google.accounts.oauth2.revoke(token);
+  token = null; $('login').hidden = false; $('app').hidden = true; $('out').hidden = true;
+}
+$('out').onclick = signOut;
+
+/* ---- folders and files ---- */
+async function findOrCreate(name, parent) {
+  const q = `name='${name}' and mimeType='application/vnd.google-apps.folder' and '${parent}' in parents and trashed=false`;
+  const r = await (await api(`${API}/files?q=${encodeURIComponent(q)}&fields=files(id)`)).json();
+  if (r.files.length) return r.files[0].id;
+  const c = await (await api(`${API}/files`, {method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({name, mimeType:'application/vnd.google-apps.folder', parents:[parent]})})).json();
+  return c.id;
+}
+async function init() {
+  const root = await findOrCreate(ROOT, 'root');
+  await Promise.all(CATS.map(async c => folders[c] = await findOrCreate(c, root)));
+  await refresh();
+}
+async function refresh() {
+  const parts = await Promise.all(CATS.map(async c => {
+    const q = `'${folders[c]}' in parents and trashed=false and mimeType!='application/vnd.google-apps.folder'`;
+    const r = await (await api(`${API}/files?q=${encodeURIComponent(q)}&pageSize=200&fields=files(id,name,modifiedTime)`)).json();
+    return r.files.map(f => ({...f, cat: c}));
+  }));
+  files = parts.flat().sort((a, b) => b.modifiedTime.localeCompare(a.modifiedTime));
+  render();
+}
+async function upload(name, text, c) {
+  const b = 'sciphy' + Date.now() + Math.random().toString(36).slice(2);
+  const meta = JSON.stringify({name, parents:[folders[c]], mimeType:'text/html'});
+  const body = `--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n--${b}\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n${text}\r\n--${b}--`;
+  await api(`${UP}/files?uploadType=multipart`, {method:'POST', headers:{'Content-Type':'multipart/related; boundary=' + b}, body});
+}
+async function uploadMany(list) {
+  const c = $('upcat').value, htmls = [...list].filter(f => /\.html?$/i.test(f.name));
+  if (!htmls.length) return toast('Only .html files can be uploaded.');
+  try {
+    for (const f of htmls) await upload(f.name, await f.text(), c);
+    toast(`Saved ${htmls.length} file${htmls.length > 1 ? 's' : ''} to ${c}`);
+    await refresh();
+  } catch (e) { toast(e.message); }
+}
+
+/* ---- rendering ---- */
+function render() {
+  $('tabs').innerHTML = ['All', ...CATS].map(c =>
+    `<button data-cat="${c}" class="${c === cat ? 'on' : ''}">${c}${c === 'All' ? ' (' + files.length + ')' : ' (' + files.filter(f => f.cat === c).length + ')'}</button>`).join('');
+  const s = $('q').value.trim().toLowerCase();
+  const rows = files.filter(f => (cat === 'All' || f.cat === cat) && f.name.toLowerCase().includes(s));
+  $('list').innerHTML = rows.length ? rows.map(f => `
+    <div class="item" data-id="${f.id}">
+      <b>${esc(f.name)}</b>
+      <small>${f.cat}, edited ${new Date(f.modifiedTime).toLocaleDateString()}</small>
+      <div class="acts">
+        <button data-a="open" class="pri">Open</button>
+        <button data-a="dl">Download</button>
+        <button data-a="rm" class="del">Delete</button>
+      </div>
+    </div>`).join('') : '<div class="empty">No files here yet. Drop an HTML file above to add one.</div>';
+}
+$('tabs').onclick = e => { const c = e.target.dataset.cat; if (c) { cat = c; render(); } };
+$('q').oninput = render;
+$('upcat').innerHTML = CATS.map(c => `<option>${c}</option>`).join('');
+$('upcat').value = 'Other';
+
+$('list').onclick = async e => {
+  const a = e.target.dataset.a, id = e.target.closest('.item')?.dataset.id;
+  if (!a) return;
+  const f = files.find(x => x.id === id);
+  try {
+    if (a === 'open') await openFile(f);
+    if (a === 'dl') {
+      const t = await (await api(`${API}/files/${id}?alt=media`)).text();
+      const l = document.createElement('a');
+      l.href = URL.createObjectURL(new Blob([t], {type:'text/html'})); l.download = f.name; l.click();
+    }
+    if (a === 'rm' && confirm(`Move "${f.name}" to Drive trash?`)) {
+      await api(`${API}/files/${id}`, {method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({trashed:true})});
+      toast('Moved to Drive trash'); await refresh();
+    }
+  } catch (err) { toast(err.message); }
+};
+
+/* ---- upload UI ---- */
+$('pick').onclick = () => $('file').click();
+$('file').onchange = e => { uploadMany(e.target.files); e.target.value = ''; };
+$('ref').onclick = () => refresh().then(() => toast('Library refreshed')).catch(e => toast(e.message));
+const d = $('drop');
+['dragenter','dragover'].forEach(v => d.addEventListener(v, e => { e.preventDefault(); d.classList.add('over'); }));
+['dragleave','drop'].forEach(v => d.addEventListener(v, e => { e.preventDefault(); d.classList.remove('over'); }));
+d.addEventListener('drop', e => uploadMany(e.dataTransfer.files));
+
+/* ---- editor ---- */
+async function openFile(f) {
+  const t = await (await api(`${API}/files/${f.id}?alt=media`)).text();
+  cur = f; $('mtitle').textContent = `${f.name} (${f.cat})`; $('code').value = t; $('frame').srcdoc = t;
+  $('modal').classList.add('show');
+}
+let pv; $('code').oninput = () => { clearTimeout(pv); pv = setTimeout(() => $('frame').srcdoc = $('code').value, 300); };
+$('close').onclick = () => { $('modal').classList.remove('show'); $('frame').srcdoc = ''; };
+$('save').onclick = async () => {
+  try {
+    if (cur.isNew) {
+      await upload(cur.name, $('code').value, $('upcat').value);
+      cur = null; $('close').click(); toast('Saved to Drive');
+    } else {
+      await api(`${UP}/files/${cur.id}?uploadType=media`, {method:'PATCH', headers:{'Content-Type':'text/html; charset=UTF-8'}, body: $('code').value});
+      toast('Saved to Drive');
+    }
+    await refresh();
+  } catch (e) { toast(e.message); }
+};
+$('new').onclick = () => {
+  const n = prompt('File name (for example, newtons-laws.html)');
+  if (!n) return;
+  const name = /\.html?$/i.test(n) ? n : n + '.html';
+  const tpl = '<!DOCTYPE html>\n<html lang="en">\n<head><meta charset="utf-8"><title>' + name + '</title></head>\n<body>\n  <h1>New SciPhy lesson</h1>\n</body>\n</html>';
+  cur = {name, cat: $('upcat').value, isNew: true};
+  $('mtitle').textContent = `${name} (new, saves to ${cur.cat})`; $('code').value = tpl; $('frame').srcdoc = tpl;
+  $('modal').classList.add('show');
+};
+</script>
+</body>
+</html>
