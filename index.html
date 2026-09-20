@@ -3,260 +3,240 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SciPhy HTML Library</title>
+<title>SciPhy Lessons</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-:root{--ink:#12203a;--paper:#f3f6fa;--card:#fff;--line:#d5deea;--mu:#5d6b85;--blue:#2454ff;--amber:#f5a524;--red:#d33a3a}
+:root{--ink:#14213d;--bg:#f7f8fb;--mu:#5b6780;--line:#dfe4ee}
 *{box-sizing:border-box}
-body{margin:0;font:16px/1.5 "Schibsted Grotesk",system-ui,sans-serif;color:var(--ink);background:var(--paper)}
+body{margin:0;font:16px/1.55 "Bricolage Grotesque",system-ui,sans-serif;color:var(--ink);background:var(--bg)}
 button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:.45rem .9rem}
-button:hover{border-color:var(--blue)}
-button.pri{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:600}
-button.del:hover{border-color:var(--red);color:var(--red)}
-:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
-input,select{border:1px solid var(--line);border-radius:8px;padding:.5rem .7rem;background:#fff}
-header{background:var(--ink);color:#fff;padding:1rem clamp(1rem,4vw,3rem);display:flex;justify-content:space-between;align-items:center;gap:1rem}
-header h1{margin:0;font-size:1.35rem;font-weight:800;letter-spacing:-.01em}
-header h1 span{color:var(--amber)}
-header button{background:transparent;color:#fff;border-color:#4a5b7d}
-.grid-bg{background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:28px 28px}
-main{max-width:1100px;margin:0 auto;padding:1.5rem clamp(1rem,4vw,2rem) 4rem}
-#login{max-width:520px;margin:4rem auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:2rem}
-#login h2{margin:0 0 .5rem;font-size:1.8rem;line-height:1.15}
-#login p{color:var(--mu);margin:.5rem 0 1.2rem}
-#login input{width:100%;margin-bottom:.8rem}
-.bar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin-bottom:1rem}
-.bar input[type=search]{flex:1 1 220px}
-#drop{border:2px dashed var(--mu);border-radius:12px;padding:1.4rem;text-align:center;color:var(--mu);background:rgba(255,255,255,.75)}
-#drop.over{border-color:var(--blue);color:var(--blue);background:#fff}
-.tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin:1rem 0}
-.tabs button{border-radius:99px;padding:.3rem .9rem}
-.tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-#list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.9rem}
-.item{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1rem;display:flex;flex-direction:column;gap:.35rem}
-.item b{overflow-wrap:anywhere}
-.item small{color:var(--mu)}
-.item .acts{display:flex;gap:.4rem;margin-top:.5rem;flex-wrap:wrap}
-.item .acts button{padding:.25rem .7rem;font-size:.9rem}
-.empty{grid-column:1/-1;text-align:center;color:var(--mu);padding:2rem}
-#modal{position:fixed;inset:0;background:rgba(18,32,58,.7);display:none;padding:2vh 2vw;z-index:10}
-#modal.show{display:block}
-.win{background:var(--card);border-radius:12px;height:100%;display:flex;flex-direction:column;overflow:hidden}
-.win .top{display:flex;gap:.6rem;align-items:center;padding:.7rem 1rem;border-bottom:1px solid var(--line)}
-.win .top b{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.panes{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0}
-.panes textarea{border:0;border-right:1px solid var(--line);padding:1rem;resize:none;font:13px/1.5 ui-monospace,Consolas,monospace;tab-size:2;min-width:0}
-.panes iframe{border:0;width:100%;height:100%;background:#fff}
-@media(max-width:720px){.panes{grid-template-columns:1fr;grid-template-rows:1fr 1fr}.panes textarea{border-right:0;border-bottom:1px solid var(--line)}}
+button{cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:6px;padding:.4rem .85rem}
+button:hover{border-color:var(--ink)}
+button.pri{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:600}
+:focus-visible{outline:3px solid #f5a524;outline-offset:2px}
+input,select{border:1px solid var(--line);border-radius:6px;padding:.5rem .75rem;background:#fff}
+body:not(.admin) .adm{display:none!important}
+.wrap{max-width:1040px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem)}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+.logo{font-size:1.5rem;letter-spacing:-.02em;font-weight:400}.logo b{font-weight:800}
+nav button{border-color:transparent;background:none;color:var(--mu)}
+h1{font-size:clamp(2.3rem,6vw,3.7rem);line-height:1.04;letter-spacing:-.03em;margin:2.2rem 0 .6rem;font-weight:800}
+.lead{color:var(--mu);max-width:46ch;margin:0 0 1.5rem}
+#q{width:100%;max-width:480px;font-size:1.05rem;padding:.7rem 1rem}
+.tiles{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.8rem 0 1.2rem}
+.tile{--c:#14213d;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;width:102px;height:114px;padding:.4rem .6rem;text-align:left;border:2px solid var(--c);border-radius:6px}
+.tile:hover{border-color:var(--c)}
+.tile .n{font-size:.85rem;color:var(--mu)}
+.tile .s{font-size:2.2rem;font-weight:800;line-height:1;color:var(--c);letter-spacing:-.03em}
+.tile .l{font-size:.82rem;font-weight:600}
+.tile.on{background:var(--c)}.tile.on span{color:#fff}
+.bar{display:none;background:var(--ink);color:#fff;padding:.7rem 0;font-size:.92rem}
+body.admin .bar{display:block}
+.bar .wrap{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.bar small{opacity:.8;flex:1 1 240px}
+.bar code{background:#2a3a5e;padding:.1rem .4rem;border-radius:4px;user-select:all;overflow-wrap:anywhere}
+.row{display:grid;grid-template-columns:44px 1fr auto auto;gap:.9rem;align-items:center;padding:.8rem 0;border-bottom:1px solid var(--line)}
+.chip{width:44px;height:44px;border-radius:5px;background:var(--c);color:#fff;font-weight:800;display:grid;place-items:center}
+.ttl{background:none;border:0;padding:0;text-align:left;font-weight:600;font-size:1.08rem}
+.ttl:hover{text-decoration:underline}
+.meta{color:var(--mu);font-size:.88rem;text-align:right;line-height:1.3}
+.acts{display:flex;gap:.4rem}.acts button{padding:.25rem .65rem;font-size:.88rem}
+.empty{padding:2.5rem 0;color:var(--mu)}
+@media(max-width:640px){.row{grid-template-columns:44px 1fr}.meta,.acts{grid-column:2;text-align:left}}
+#view{position:fixed;inset:0;background:#fff;display:none;flex-direction:column;z-index:10}
+#view.show{display:flex}
+.vtop{display:flex;gap:.5rem;align-items:center;padding:.6rem 1rem;border-bottom:1px solid var(--line)}
+.vtop b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.panes{flex:1;display:grid;grid-template-columns:1fr;min-height:0}
+#view.editing .panes{grid-template-columns:1fr 1fr}
+#code{display:none;border:0;border-right:1px solid var(--line);padding:1rem;resize:none;font:13px/1.5 ui-monospace,Consolas,monospace;min-width:0}
+#view.editing #code{display:block}
+#save{display:none}#view.editing #save{display:inline-block}
+#frame{border:0;width:100%;height:100%}
+@media(max-width:720px){#view.editing .panes{grid-template-columns:1fr;grid-template-rows:1fr 1fr}#code{border-right:0;border-bottom:1px solid var(--line)}}
 #toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:.6rem 1.1rem;border-radius:8px;display:none;z-index:20;max-width:90vw}
 </style>
 </head>
 <body>
-<header>
-  <h1>Sci<span>Phy</span> HTML Library</h1>
-  <button id="out" hidden>Sign out</button>
-</header>
+<div class="bar adm"><div class="wrap">
+  <small>Managing. Drop .html files anywhere on this page. Library folder ID: <code id="fid"></code></small>
+  <label>Add to <select id="upcat"></select></label>
+  <button class="pri" id="pick">Upload files</button><button id="new">New file</button><button id="out">Sign out</button>
+  <input type="file" id="file" accept=".html,.htm,text/html" multiple hidden>
+</div></div>
 
-<section id="login" class="grid-bg" style="background-color:#fff">
-  <h2>Your lessons, stored in your Google Drive</h2>
-  <p>Sign in to open the SciPhy HTML Library folder in Drive. Paste your OAuth Client ID once; this browser remembers it. It is safe to share, unlike a client secret, and no secret is needed here.</p>
-  <input id="cid" placeholder="123456789-abc.apps.googleusercontent.com" aria-label="Google OAuth Client ID" autocomplete="off">
-  <button class="pri" id="in">Sign in with Google</button>
-</section>
-
-<main id="app" hidden>
-  <div class="bar">
-    <input type="search" id="q" placeholder="Search by file name" aria-label="Search files">
-    <label>Upload to <select id="upcat"></select></label>
-    <button class="pri" id="pick">Upload HTML files</button>
-    <button id="new">New file</button>
-    <button id="ref">Refresh</button>
-    <input type="file" id="file" accept=".html,.htm,text/html" multiple hidden>
-  </div>
-  <div id="drop" class="grid-bg">Drop .html files here to save them to Drive</div>
-  <div class="tabs" id="tabs"></div>
+<div class="wrap">
+  <nav><span class="logo">Sci<b>Phy</b></span><button id="mg">Owner sign in</button></nav>
+  <h1>SciPhy lessons</h1>
+  <p class="lead">Choose a subject, then open a lesson. Each one runs right here in your browser.</p>
+  <input type="search" id="q" placeholder="Search lessons" aria-label="Search lessons">
+  <div class="tiles" id="tiles"></div>
   <div id="list"></div>
-</main>
+</div>
 
-<div id="modal" role="dialog" aria-modal="true" aria-label="Edit and preview">
-  <div class="win">
-    <div class="top">
-      <b id="mtitle"></b>
-      <button class="pri" id="save">Save to Drive</button>
-      <button id="close">Close</button>
-    </div>
-    <div class="panes">
-      <textarea id="code" spellcheck="false" aria-label="HTML source"></textarea>
-      <iframe id="frame" sandbox="allow-scripts allow-forms allow-modals" title="Live preview"></iframe>
-    </div>
+<div id="view" role="dialog" aria-modal="true" aria-label="Lesson">
+  <div class="vtop">
+    <b id="vt"></b>
+    <button id="tab">Open in new tab</button>
+    <button class="adm" id="edit">Edit</button>
+    <button class="pri" id="save">Save to Drive</button>
+    <button id="close">Close</button>
+  </div>
+  <div class="panes">
+    <textarea id="code" spellcheck="false" aria-label="HTML source"></textarea>
+    <iframe id="frame" sandbox="allow-scripts allow-forms allow-modals" title="Lesson"></iframe>
   </div>
 </div>
 <div id="toast" role="status"></div>
 
 <script>
-// Use 'https://www.googleapis.com/auth/drive' instead if the library must also show files
-// you uploaded to Drive by hand. drive.file only sees files this app creates.
+// Fill these in after setup (see instructions). Client ID and API key are safe to publish.
+const CFG = { CLIENT_ID: '', API_KEY: '', ROOT_FOLDER_ID: '' };
 const SCOPE = 'https://www.googleapis.com/auth/drive.file';
-const ROOT = 'SciPhy HTML Library';
-const CATS = ['Mathematics','Physics','Chemistry','Biology','Quizzes','Projects','Other'];
+const ROOT = 'SciPhy HTML Library', FOLD = 'application/vnd.google-apps.folder';
+const CATS = {Mathematics:['Ma','#6d5bd0'],Physics:['Ph','#1f6feb'],Chemistry:['Ch','#0e9384'],Biology:['Bi','#5a9a1f'],Quizzes:['Qz','#d9822b'],Projects:['Pr','#d6476b'],Other:['Ot','#6b7a90']};
 const API = 'https://www.googleapis.com/drive/v3', UP = 'https://www.googleapis.com/upload/drive/v3';
 const $ = id => document.getElementById(id);
-let token = null, tc = null, folders = {}, files = [], cat = 'All', cur = null, t1;
+let token = null, folders = {}, files = [], cat = 'All', cur = null, t1, rootId = '';
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function toast(m){ const t=$('toast'); t.textContent=m; t.style.display='block'; clearTimeout(t1); t1=setTimeout(()=>t.style.display='none',3500); }
+const pretty = n => n.replace(/\.html?$/i,'').replace(/[-_]+/g,' ').replace(/\b[a-z]/g, c => c.toUpperCase());
+const toast = m => { const t=$('toast'); t.textContent=m; t.style.display='block'; clearTimeout(t1); t1=setTimeout(()=>t.style.display='none',4000); };
 
-async function api(url, opt = {}) {
-  const r = await fetch(url, {...opt, headers: {Authorization: 'Bearer ' + token, ...(opt.headers || {})}});
-  if (r.status === 401) { signOut(); throw new Error('Session expired. Sign in again.'); }
-  if (!r.ok) throw new Error('Drive error ' + r.status + ': ' + (await r.text()).slice(0, 160));
+async function g(url, o = {}) {
+  const h = {...(o.headers || {})};
+  if (token) h.Authorization = 'Bearer ' + token; else url += (url.includes('?') ? '&' : '?') + 'key=' + CFG.API_KEY;
+  const r = await fetch(url, {...o, headers: h});
+  if (r.status === 401 && token) { signOut(); throw Error('Session expired. Sign in again.'); }
+  if (!r.ok) throw Error(!token && (r.status === 403 || r.status === 404) ? 'The library folder is not shared publicly yet.' : 'Drive error ' + r.status);
   return r;
 }
+const list = async (q, f) => (await (await g(`${API}/files?q=${encodeURIComponent(q)}&pageSize=200&fields=${f}`)).json()).files;
+async function fc(name, parent) {
+  const f = await list(`name='${name}' and mimeType='${FOLD}' and '${parent}' in parents and trashed=false`, 'files(id)');
+  if (f.length) return f[0].id;
+  return (await (await g(`${API}/files`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name, mimeType:FOLD, parents:[parent]})})).json()).id;
+}
 
-/* ---- sign in ---- */
-$('cid').value = localStorage.getItem('sciphy_cid') || '';
-$('in').onclick = () => {
-  const id = $('cid').value.trim();
-  if (!id) return toast('Paste your OAuth Client ID first.');
-  if (!window.google) return toast('Google sign-in is still loading. Try again in a moment.');
-  localStorage.setItem('sciphy_cid', id);
-  tc = google.accounts.oauth2.initTokenClient({
-    client_id: id, scope: SCOPE,
-    callback: async r => {
-      if (r.error) return toast('Sign-in failed: ' + r.error);
-      token = r.access_token;
-      $('login').hidden = true; $('app').hidden = false; $('out').hidden = false;
-      try { await init(); } catch (e) { toast(e.message); }
-    }
-  });
-  tc.requestAccessToken();
-};
-function signOut() {
-  if (token && window.google) google.accounts.oauth2.revoke(token);
-  token = null; $('login').hidden = false; $('app').hidden = true; $('out').hidden = true;
-}
-$('out').onclick = signOut;
-
-/* ---- folders and files ---- */
-async function findOrCreate(name, parent) {
-  const q = `name='${name}' and mimeType='application/vnd.google-apps.folder' and '${parent}' in parents and trashed=false`;
-  const r = await (await api(`${API}/files?q=${encodeURIComponent(q)}&fields=files(id)`)).json();
-  if (r.files.length) return r.files[0].id;
-  const c = await (await api(`${API}/files`, {method:'POST', headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({name, mimeType:'application/vnd.google-apps.folder', parents:[parent]})})).json();
-  return c.id;
-}
-async function init() {
-  const root = await findOrCreate(ROOT, 'root');
-  await Promise.all(CATS.map(async c => folders[c] = await findOrCreate(c, root)));
-  await refresh();
-}
-async function refresh() {
-  const parts = await Promise.all(CATS.map(async c => {
-    const q = `'${folders[c]}' in parents and trashed=false and mimeType!='application/vnd.google-apps.folder'`;
-    const r = await (await api(`${API}/files?q=${encodeURIComponent(q)}&pageSize=200&fields=files(id,name,modifiedTime)`)).json();
-    return r.files.map(f => ({...f, cat: c}));
-  }));
+async function load() {
+  if (!token && !(CFG.API_KEY && CFG.ROOT_FOLDER_ID)) {
+    $('list').innerHTML = '<div class="empty">This library is not connected yet. The owner needs to add the folder ID and API key, then sign in once.</div>'; return;
+  }
+  folders = {};
+  if (token) {
+    rootId = await fc(ROOT, 'root'); $('fid').textContent = rootId;
+    await Promise.all(Object.keys(CATS).map(async c => folders[c] = await fc(c, rootId)));
+  } else {
+    (await list(`'${CFG.ROOT_FOLDER_ID}' in parents and mimeType='${FOLD}' and trashed=false`, 'files(id,name)')).forEach(f => { if (CATS[f.name]) folders[f.name] = f.id; });
+  }
+  const parts = await Promise.all(Object.entries(folders).map(async ([c, id]) =>
+    (await list(`'${id}' in parents and trashed=false and mimeType!='${FOLD}'`, 'files(id,name,modifiedTime)')).map(f => ({...f, cat:c}))));
   files = parts.flat().sort((a, b) => b.modifiedTime.localeCompare(a.modifiedTime));
   render();
 }
-async function upload(name, text, c) {
-  const b = 'sciphy' + Date.now() + Math.random().toString(36).slice(2);
-  const meta = JSON.stringify({name, parents:[folders[c]], mimeType:'text/html'});
-  const body = `--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n--${b}\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n${text}\r\n--${b}--`;
-  await api(`${UP}/files?uploadType=multipart`, {method:'POST', headers:{'Content-Type':'multipart/related; boundary=' + b}, body});
-}
-async function uploadMany(list) {
-  const c = $('upcat').value, htmls = [...list].filter(f => /\.html?$/i.test(f.name));
-  if (!htmls.length) return toast('Only .html files can be uploaded.');
-  try {
-    for (const f of htmls) await upload(f.name, await f.text(), c);
-    toast(`Saved ${htmls.length} file${htmls.length > 1 ? 's' : ''} to ${c}`);
-    await refresh();
-  } catch (e) { toast(e.message); }
-}
+const start = () => load().catch(e => { $('list').innerHTML = `<div class="empty">${esc(e.message)}</div>`; });
 
-/* ---- rendering ---- */
 function render() {
-  $('tabs').innerHTML = ['All', ...CATS].map(c =>
-    `<button data-cat="${c}" class="${c === cat ? 'on' : ''}">${c}${c === 'All' ? ' (' + files.length + ')' : ' (' + files.filter(f => f.cat === c).length + ')'}</button>`).join('');
+  const n = c => files.filter(f => f.cat === c).length;
+  $('tiles').innerHTML = [['All','SP','#14213d',files.length], ...Object.keys(CATS).map(c => [c, CATS[c][0], CATS[c][1], n(c)])]
+    .map(([c,s,col,k]) => `<button class="tile${c===cat?' on':''}" data-c="${c}" style="--c:${col}" aria-pressed="${c===cat}"><span class="n">${k}</span><span class="s">${s}</span><span class="l">${c}</span></button>`).join('');
   const s = $('q').value.trim().toLowerCase();
-  const rows = files.filter(f => (cat === 'All' || f.cat === cat) && f.name.toLowerCase().includes(s));
+  const rows = files.filter(f => (cat === 'All' || f.cat === cat) && pretty(f.name).toLowerCase().includes(s));
   $('list').innerHTML = rows.length ? rows.map(f => `
-    <div class="item" data-id="${f.id}">
-      <b>${esc(f.name)}</b>
-      <small>${f.cat}, edited ${new Date(f.modifiedTime).toLocaleDateString()}</small>
-      <div class="acts">
-        <button data-a="open" class="pri">Open</button>
-        <button data-a="dl">Download</button>
-        <button data-a="rm" class="del">Delete</button>
-      </div>
-    </div>`).join('') : '<div class="empty">No files here yet. Drop an HTML file above to add one.</div>';
+    <div class="row" data-id="${f.id}" style="--c:${CATS[f.cat][1]}">
+      <span class="chip" aria-hidden="true">${CATS[f.cat][0]}</span>
+      <button class="ttl" data-a="open">${esc(pretty(f.name))}</button>
+      <span class="meta">${f.cat}<br>${new Date(f.modifiedTime).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})}</span>
+      <span class="acts adm"><button data-a="edit">Edit</button><button data-a="dl">Download</button><button data-a="rm">Delete</button></span>
+    </div>`).join('') : '<div class="empty">No lessons in this subject yet.</div>';
 }
-$('tabs').onclick = e => { const c = e.target.dataset.cat; if (c) { cat = c; render(); } };
+$('tiles').onclick = e => {
+  const b = e.target.closest('.tile'); if (!b) return;
+  cat = b.dataset.c; if (cat !== 'All') $('upcat').value = cat; render();
+};
 $('q').oninput = render;
-$('upcat').innerHTML = CATS.map(c => `<option>${c}</option>`).join('');
-$('upcat').value = 'Other';
+$('upcat').innerHTML = Object.keys(CATS).map(c => `<option>${c}</option>`).join(''); $('upcat').value = 'Other';
 
+/* ---- owner sign in ---- */
+$('mg').onclick = () => {
+  const id = CFG.CLIENT_ID || localStorage.getItem('sciphy_cid') || prompt('Paste your Google OAuth Client ID');
+  if (!id) return;
+  if (!window.google) return toast('Google sign-in is still loading. Try again.');
+  localStorage.setItem('sciphy_cid', id);
+  google.accounts.oauth2.initTokenClient({client_id: id, scope: SCOPE, callback: r => {
+    if (r.error) return toast('Sign-in failed: ' + r.error);
+    token = r.access_token; document.body.classList.add('admin'); $('mg').hidden = true; start();
+  }}).requestAccessToken();
+};
+function signOut() {
+  if (token && window.google) google.accounts.oauth2.revoke(token);
+  token = null; document.body.classList.remove('admin'); $('mg').hidden = false; start();
+}
+$('out').onclick = signOut;
+
+/* ---- viewer and editor ---- */
+async function open(f, edit) {
+  const t = await (await g(`${API}/files/${f.id}?alt=media`)).text();
+  cur = f; $('vt').textContent = pretty(f.name); $('code').value = t; $('frame').srcdoc = t;
+  $('view').classList.toggle('editing', !!edit); $('view').classList.add('show');
+}
+$('close').onclick = () => { $('view').classList.remove('show', 'editing'); $('frame').srcdoc = ''; };
+$('edit').onclick = () => $('view').classList.toggle('editing');
+$('tab').onclick = () => window.open(URL.createObjectURL(new Blob([$('code').value], {type:'text/html'})), '_blank', 'noopener');
+let pv; $('code').oninput = () => { clearTimeout(pv); pv = setTimeout(() => $('frame').srcdoc = $('code').value, 300); };
+$('save').onclick = async () => {
+  try {
+    if (cur.isNew) await put(cur.name, $('code').value, $('upcat').value);
+    else await g(`${UP}/files/${cur.id}?uploadType=media`, {method:'PATCH', headers:{'Content-Type':'text/html; charset=UTF-8'}, body:$('code').value});
+    toast('Saved to Drive'); if (cur.isNew) $('close').click(); await load();
+  } catch (e) { toast(e.message); }
+};
+$('new').onclick = () => {
+  const n = prompt('File name, for example newtons-laws.html'); if (!n) return;
+  const name = /\.html?$/i.test(n) ? n : n + '.html';
+  const tpl = `<!DOCTYPE html>\n<html lang="en">\n<head><meta charset="utf-8"><title>${name}</title></head>\n<body>\n  <h1>New SciPhy lesson</h1>\n</body>\n</html>`;
+  cur = {name, isNew:true}; $('vt').textContent = pretty(name) + ' (new)'; $('code').value = tpl; $('frame').srcdoc = tpl;
+  $('view').classList.add('show', 'editing');
+};
+
+/* ---- row actions ---- */
 $('list').onclick = async e => {
-  const a = e.target.dataset.a, id = e.target.closest('.item')?.dataset.id;
-  if (!a) return;
+  const a = e.target.dataset.a, id = e.target.closest('.row')?.dataset.id; if (!a) return;
   const f = files.find(x => x.id === id);
   try {
-    if (a === 'open') await openFile(f);
+    if (a === 'open') await open(f); if (a === 'edit') await open(f, true);
     if (a === 'dl') {
-      const t = await (await api(`${API}/files/${id}?alt=media`)).text();
-      const l = document.createElement('a');
+      const t = await (await g(`${API}/files/${id}?alt=media`)).text(), l = document.createElement('a');
       l.href = URL.createObjectURL(new Blob([t], {type:'text/html'})); l.download = f.name; l.click();
     }
-    if (a === 'rm' && confirm(`Move "${f.name}" to Drive trash?`)) {
-      await api(`${API}/files/${id}`, {method:'PATCH', headers:{'Content-Type':'application/json'}, body: JSON.stringify({trashed:true})});
-      toast('Moved to Drive trash'); await refresh();
+    if (a === 'rm' && confirm(`Move "${pretty(f.name)}" to Drive trash?`)) {
+      await g(`${API}/files/${id}`, {method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({trashed:true})});
+      toast('Moved to Drive trash'); await load();
     }
   } catch (err) { toast(err.message); }
 };
 
-/* ---- upload UI ---- */
+/* ---- uploads ---- */
+async function put(name, text, c) {
+  const b = 'sp' + Date.now() + Math.random().toString(36).slice(2);
+  const meta = JSON.stringify({name, parents:[folders[c]], mimeType:'text/html'});
+  await g(`${UP}/files?uploadType=multipart`, {method:'POST', headers:{'Content-Type':'multipart/related; boundary=' + b},
+    body:`--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n--${b}\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n${text}\r\n--${b}--`});
+}
+async function uploadMany(fl) {
+  const h = [...fl].filter(f => /\.html?$/i.test(f.name)), c = $('upcat').value;
+  if (!h.length) return toast('Only .html files can be uploaded.');
+  try { for (const f of h) await put(f.name, await f.text(), c); toast(`Saved ${h.length} file${h.length>1?'s':''} to ${c}`); await load(); }
+  catch (e) { toast(e.message); }
+}
 $('pick').onclick = () => $('file').click();
 $('file').onchange = e => { uploadMany(e.target.files); e.target.value = ''; };
-$('ref').onclick = () => refresh().then(() => toast('Library refreshed')).catch(e => toast(e.message));
-const d = $('drop');
-['dragenter','dragover'].forEach(v => d.addEventListener(v, e => { e.preventDefault(); d.classList.add('over'); }));
-['dragleave','drop'].forEach(v => d.addEventListener(v, e => { e.preventDefault(); d.classList.remove('over'); }));
-d.addEventListener('drop', e => uploadMany(e.dataTransfer.files));
+addEventListener('dragover', e => { if (token) e.preventDefault(); });
+addEventListener('drop', e => { if (token) { e.preventDefault(); uploadMany(e.dataTransfer.files); } });
 
-/* ---- editor ---- */
-async function openFile(f) {
-  const t = await (await api(`${API}/files/${f.id}?alt=media`)).text();
-  cur = f; $('mtitle').textContent = `${f.name} (${f.cat})`; $('code').value = t; $('frame').srcdoc = t;
-  $('modal').classList.add('show');
-}
-let pv; $('code').oninput = () => { clearTimeout(pv); pv = setTimeout(() => $('frame').srcdoc = $('code').value, 300); };
-$('close').onclick = () => { $('modal').classList.remove('show'); $('frame').srcdoc = ''; };
-$('save').onclick = async () => {
-  try {
-    if (cur.isNew) {
-      await upload(cur.name, $('code').value, $('upcat').value);
-      cur = null; $('close').click(); toast('Saved to Drive');
-    } else {
-      await api(`${UP}/files/${cur.id}?uploadType=media`, {method:'PATCH', headers:{'Content-Type':'text/html; charset=UTF-8'}, body: $('code').value});
-      toast('Saved to Drive');
-    }
-    await refresh();
-  } catch (e) { toast(e.message); }
-};
-$('new').onclick = () => {
-  const n = prompt('File name (for example, newtons-laws.html)');
-  if (!n) return;
-  const name = /\.html?$/i.test(n) ? n : n + '.html';
-  const tpl = '<!DOCTYPE html>\n<html lang="en">\n<head><meta charset="utf-8"><title>' + name + '</title></head>\n<body>\n  <h1>New SciPhy lesson</h1>\n</body>\n</html>';
-  cur = {name, cat: $('upcat').value, isNew: true};
-  $('mtitle').textContent = `${name} (new, saves to ${cur.cat})`; $('code').value = tpl; $('frame').srcdoc = tpl;
-  $('modal').classList.add('show');
-};
+start();
 </script>
 </body>
 </html>
