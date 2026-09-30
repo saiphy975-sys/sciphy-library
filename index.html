@@ -345,9 +345,12 @@ async function openItem(f, edit) {
     $('edit').style.display = 'none'; $('code').value = '';
   } else if (f.mimeType === 'application/pdf') {
     const blob = await (await g(`${API}/files/${f.id}?alt=media`)).blob();
-    curBlobUrl = URL.createObjectURL(blob);
+    curBlobUrl = URL.createObjectURL(blob); // used only by "Open in new tab"
+    const dataUrl = await new Promise((res, rej) => {
+      const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(blob);
+    });
     $('frame').style.display = 'none';
-    $('pdfframe').style.display = ''; $('pdfframe').src = curBlobUrl;
+    $('pdfframe').style.display = ''; $('pdfframe').src = dataUrl;
     $('edit').style.display = 'none'; $('code').value = '';
   } else {
     const t = await (await g(`${API}/files/${f.id}?alt=media`)).text();
