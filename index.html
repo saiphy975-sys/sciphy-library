@@ -105,7 +105,7 @@ table.board tr:first-child td{font-weight:700}
   <div class="panes">
     <textarea id="code" spellcheck="false" aria-label="HTML source"></textarea>
     <iframe id="frame" sandbox="allow-scripts allow-forms allow-modals" title="Content"></iframe>
-    <iframe id="pdfframe" sandbox="allow-same-origin" title="PDF" style="display:none"></iframe>
+    <iframe id="pdfframe" sandbox="allow-scripts allow-same-origin allow-popups" title="PDF" style="display:none"></iframe>
   </div>
 </div>
 <div id="toast" role="status"></div>
@@ -128,7 +128,7 @@ const API = 'https://www.googleapis.com/drive/v3', UP = 'https://www.googleapis.
 const ADJ = ['Quantum','Cosmic','Blazing','Silent','Electric','Mighty','Clever','Rapid','Frosty','Golden','Shadow','Turbo','Radiant','Stellar'];
 const NOUN = ['Falcon','Tiger','Comet','Ninja','Wizard','Rocket','Panther','Phoenix','Dragon','Nova','Wolf','Hawk','Atom','Photon'];
 const $ = id => document.getElementById(id);
-let token = null, folders = {}, files = [], nav = [], showBoard = false, cur = null, curBlobUrl = null, t1, rootId = '';
+let token = null, folders = {}, files = [], nav = [], showBoard = false, cur = null, curBlobUrl = null, curExternalUrl = null, t1, rootId = '';
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pretty = n => n.replace(/\.[a-z0-9]+$/i,'').replace(/[-_]+/g,' ').replace(/\b[a-z]/g, c => c.toUpperCase());
