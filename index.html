@@ -19,31 +19,41 @@ button.pri{background:var(--ink);color:#fff;border-color:var(--ink);font-weight:
 input,select{border:1px solid var(--line);border-radius:6px;padding:.5rem .75rem;background:#fff}
 body:not(.admin) .adm{display:none!important}
 .wrap{max-width:1040px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem)}
-nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;gap:.6rem;flex-wrap:wrap}
 .logo{font-size:1.5rem;letter-spacing:-.02em;font-weight:400}.logo b{font-weight:800}
 nav button{border-color:transparent;background:none;color:var(--mu)}
-h1{font-size:clamp(2.3rem,6vw,3.7rem);line-height:1.04;letter-spacing:-.03em;margin:2.2rem 0 .6rem;font-weight:800}
-.lead{color:var(--mu);max-width:46ch;margin:0 0 1.5rem}
+#who{display:flex;align-items:center;gap:.4rem;font-size:.9rem;color:var(--mu)}
+#who b{color:var(--ink)}
+#reroll{padding:.15rem .45rem;font-size:.95rem}
+h1{font-size:clamp(2.1rem,5.5vw,3.4rem);line-height:1.05;letter-spacing:-.03em;margin:1.6rem 0 .5rem;font-weight:800}
+.lead{color:var(--mu);max-width:46ch;margin:0 0 1.2rem}
 #q{width:100%;max-width:480px;font-size:1.05rem;padding:.7rem 1rem}
-.tiles{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.8rem 0 1.2rem}
-.tile{--c:#14213d;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;width:102px;height:114px;padding:.4rem .6rem;text-align:left;border:2px solid var(--c);border-radius:6px}
-.tile:hover{border-color:var(--c)}
+#crumb{margin:1.2rem 0 .2rem;font-size:.92rem;color:var(--mu)}
+#crumb button{border:0;background:none;padding:0;color:var(--mu);text-decoration:underline;font-size:inherit}
+#crumb button:last-of-type{color:var(--ink);text-decoration:none;font-weight:600}
+.tiles{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0 1.2rem}
+.tile{--c:#14213d;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;width:112px;height:118px;padding:.5rem .65rem;text-align:left;border:2px solid var(--c);border-radius:6px}
+.tile:hover{filter:brightness(.96)}
 .tile .n{font-size:.85rem;color:var(--mu)}
-.tile .s{font-size:2.2rem;font-weight:800;line-height:1;color:var(--c);letter-spacing:-.03em}
-.tile .l{font-size:.82rem;font-weight:600}
-.tile.on{background:var(--c)}.tile.on span{color:#fff}
+.tile .s{font-size:2rem;font-weight:800;line-height:1;color:var(--c);letter-spacing:-.03em}
+.tile .l{font-size:.85rem;font-weight:600}
 .bar{display:none;background:var(--ink);color:#fff;padding:.7rem 0;font-size:.92rem}
 body.admin .bar{display:block}
 .bar .wrap{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
-.bar small{opacity:.8;flex:1 1 240px}
+.bar small{opacity:.8;flex:1 1 200px}
 .bar code{background:#2a3a5e;padding:.1rem .4rem;border-radius:4px;user-select:all;overflow-wrap:anywhere}
+.bar label{display:flex;align-items:center;gap:.3rem}
 .row{display:grid;grid-template-columns:44px 1fr auto auto;gap:.9rem;align-items:center;padding:.8rem 0;border-bottom:1px solid var(--line)}
-.chip{width:44px;height:44px;border-radius:5px;background:var(--c);color:#fff;font-weight:800;display:grid;place-items:center}
+.chip{width:44px;height:44px;border-radius:5px;background:var(--c);color:#fff;font-weight:800;display:grid;place-items:center;font-size:.8rem}
 .ttl{background:none;border:0;padding:0;text-align:left;font-weight:600;font-size:1.08rem}
 .ttl:hover{text-decoration:underline}
 .meta{color:var(--mu);font-size:.88rem;text-align:right;line-height:1.3}
 .acts{display:flex;gap:.4rem}.acts button{padding:.25rem .65rem;font-size:.88rem}
 .empty{padding:2.5rem 0;color:var(--mu)}
+table.board{width:100%;border-collapse:collapse;margin-top:.5rem}
+table.board th,table.board td{text-align:left;padding:.5rem .6rem;border-bottom:1px solid var(--line);font-size:.95rem}
+table.board th{color:var(--mu);font-weight:600;font-size:.82rem;text-transform:uppercase;letter-spacing:.03em}
+table.board tr:first-child td{font-weight:700}
 @media(max-width:640px){.row{grid-template-columns:44px 1fr}.meta,.acts{grid-column:2;text-align:left}}
 #view{position:fixed;inset:0;background:#fff;display:none;flex-direction:column;z-index:10}
 #view.show{display:flex}
@@ -54,31 +64,37 @@ body.admin .bar{display:block}
 #code{display:none;border:0;border-right:1px solid var(--line);padding:1rem;resize:none;font:13px/1.5 ui-monospace,Consolas,monospace;min-width:0}
 #view.editing #code{display:block}
 #save{display:none}#view.editing #save{display:inline-block}
-#frame{border:0;width:100%;height:100%}
+#frame{border:0;width:100%;height:100%;background:#fff}
 @media(max-width:720px){#view.editing .panes{grid-template-columns:1fr;grid-template-rows:1fr 1fr}#code{border-right:0;border-bottom:1px solid var(--line)}}
-#cidbox{display:flex;gap:.5rem;flex-wrap:wrap}#cidbox[hidden]{display:none}#cid{flex:1 1 280px}
+#cidbox{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.6rem}#cidbox[hidden]{display:none}#cid{flex:1 1 280px}
 #toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:.6rem 1.1rem;border-radius:8px;display:none;z-index:20;max-width:90vw}
 </style>
 </head>
 <body>
 <div class="bar adm"><div class="wrap">
-  <small>Managing. Drop .html files anywhere on this page. Library folder ID: <code id="fid"></code></small>
+  <small>Managing. Library folder: <code id="fid"></code></small>
   <label>Add to <select id="upcat"></select></label>
-  <button class="pri" id="pick">Upload files</button><button id="new">New file</button><button id="out">Sign out</button>
-  <input type="file" id="file" accept=".html,.htm,text/html" multiple hidden>
+  <label><input type="checkbox" id="isquiz"> Mark as quiz</label>
+  <button class="pri" id="pick">Upload files</button><button id="new">New file</button><button id="ref">Refresh</button><button id="out">Sign out</button>
+  <input type="file" id="file" accept=".html,.htm,.pdf,.png,.jpg,.jpeg,.gif,.webp,image/*,application/pdf,text/html" multiple hidden>
 </div></div>
 
 <div class="wrap">
-  <nav><span class="logo">Sci<b>Phy</b></span><button id="mg">Owner sign in</button></nav>
+  <nav>
+    <span class="logo">Sci<b>Phy</b></span>
+    <span id="who"><span>Playing as</span><b id="whoName"></b><button id="reroll" title="Get a new name">🎲</button></span>
+    <button id="mg">Owner sign in</button>
+  </nav>
   <div id="cidbox" hidden><input id="cid" placeholder="Paste your Google Client ID" aria-label="Google OAuth Client ID" autocomplete="off"><button class="pri" id="cgo">Continue</button></div>
   <h1>SciPhy lessons</h1>
-  <p class="lead">Choose a subject, then open a lesson. Each one runs right here in your browser.</p>
-  <input type="search" id="q" placeholder="Search lessons" aria-label="Search lessons">
+  <p class="lead">Pick a class, then a subject and section. Lessons, quizzes, and resources open right here.</p>
+  <input type="search" id="q" placeholder="Search everything" aria-label="Search">
+  <div id="crumb"></div>
   <div class="tiles" id="tiles"></div>
   <div id="list"></div>
 </div>
 
-<div id="view" role="dialog" aria-modal="true" aria-label="Lesson">
+<div id="view" role="dialog" aria-modal="true" aria-label="Content">
   <div class="vtop">
     <b id="vt"></b>
     <button id="tab">Open in new tab</button>
@@ -88,24 +104,41 @@ body.admin .bar{display:block}
   </div>
   <div class="panes">
     <textarea id="code" spellcheck="false" aria-label="HTML source"></textarea>
-    <iframe id="frame" sandbox="allow-scripts allow-forms allow-modals" title="Lesson"></iframe>
+    <iframe id="frame" sandbox="allow-scripts allow-forms allow-modals" title="Content"></iframe>
   </div>
 </div>
 <div id="toast" role="status"></div>
 
 <script>
-// Fill these in after setup (see instructions). Client ID and API key are safe to publish.
-const CFG = { CLIENT_ID: '431762620783-cp070vjnbvv0nl1n0c10apc10c4ja0kq.apps.googleusercontent.com', API_KEY: 'AIzaSyBB1DFCF7NUh0cGVMGlshxa8m3blIf5riE', ROOT_FOLDER_ID: '1zuSOvCYzQcm8UCQTSvf2GYH427pbHQES' };
+// Fill these in once. All values here are safe to publish (no secrets).
+const CFG = {
+  CLIENT_ID: '431762620783-cp070vjnbvv0nl1n0c10apc10c4ja0kq.apps.googleusercontent.com',
+  API_KEY: 'AIzaSyBB1DFCF7NUh0cGVMGlshxa8m3blIf5riE',
+  ROOT_FOLDER_ID: '1zuSOvCYzQcm8UCQTSvf2GYH427pbHQES',
+  // Leaderboard (optional). Leave blank to skip; see setup instructions to fill these in.
+  FORM_ACTION: '',   // https://docs.google.com/forms/d/e/XXXXXXXX/formResponse
+  FORM_FIELDS: { nickname: '', quiz: '', score: '', total: '', group: '' }, // entry.123456 ids
+  SHEET_CSV_URL: ''  // published-to-web CSV link of the responses sheet
+};
 const SCOPE = 'https://www.googleapis.com/auth/drive.file';
 const ROOT = 'SciPhy HTML Library', FOLD = 'application/vnd.google-apps.folder';
-const CATS = {Mathematics:['Ma','#6d5bd0'],Physics:['Ph','#1f6feb'],Chemistry:['Ch','#0e9384'],Biology:['Bi','#5a9a1f'],Quizzes:['Qz','#d9822b'],Projects:['Pr','#d6476b'],Other:['Ot','#6b7a90']};
+const CLASSES = ['Class 9','Class 10'], SUBJECTS = ['Physics','Chemistry'], SECTIONS = ['IIT','Non-IIT'];
 const API = 'https://www.googleapis.com/drive/v3', UP = 'https://www.googleapis.com/upload/drive/v3';
+const ADJ = ['Quantum','Cosmic','Blazing','Silent','Electric','Mighty','Clever','Rapid','Frosty','Golden','Shadow','Turbo','Radiant','Stellar'];
+const NOUN = ['Falcon','Tiger','Comet','Ninja','Wizard','Rocket','Panther','Phoenix','Dragon','Nova','Wolf','Hawk','Atom','Photon'];
 const $ = id => document.getElementById(id);
-let token = null, folders = {}, files = [], cat = 'All', cur = null, t1, rootId = '';
+let token = null, folders = {}, files = [], nav = [], showBoard = false, cur = null, curBlobUrl = null, t1, rootId = '';
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const pretty = n => n.replace(/\.html?$/i,'').replace(/[-_]+/g,' ').replace(/\b[a-z]/g, c => c.toUpperCase());
+const pretty = n => n.replace(/\.[a-z0-9]+$/i,'').replace(/[-_]+/g,' ').replace(/\b[a-z]/g, c => c.toUpperCase());
 const toast = m => { const t=$('toast'); t.textContent=m; t.style.display='block'; clearTimeout(t1); t1=setTimeout(()=>t.style.display='none',4000); };
+const pick = a => a[Math.floor(Math.random()*a.length)];
+function nickname(reroll) {
+  let n = localStorage.getItem('sciphy_nick');
+  if (!n || reroll) { n = `${pick(ADJ)} ${pick(NOUN)} ${1+Math.floor(Math.random()*99)}`; localStorage.setItem('sciphy_nick', n); }
+  $('whoName').textContent = n; return n;
+}
+$('reroll').onclick = () => nickname(true);
 
 async function g(url, o = {}) {
   const h = {...(o.headers || {})};
@@ -121,45 +154,156 @@ async function fc(name, parent) {
   if (f.length) return f[0].id;
   return (await (await g(`${API}/files`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({name, mimeType:FOLD, parents:[parent]})})).json()).id;
 }
+async function frFind(name, parent) {
+  const f = await list(`name='${name}' and mimeType='${FOLD}' and '${parent}' in parents and trashed=false`, 'files(id)');
+  return f.length ? f[0].id : null;
+}
 
+async function resolveFolders() {
+  folders = {};
+  const mk = token ? fc : frFind;
+  rootId = token ? await fc(ROOT, 'root') : CFG.ROOT_FOLDER_ID;
+  if (token) $('fid').textContent = rootId;
+  const [classIds, otherId] = await Promise.all([Promise.all(CLASSES.map(c => mk(c, rootId))), mk('Other', rootId)]);
+  if (otherId) folders['Other'] = otherId;
+  await Promise.all(CLASSES.map(async (c, i) => {
+    const cid = classIds[i]; if (!cid) return;
+    const subjIds = await Promise.all(SUBJECTS.map(s => mk(s, cid)));
+    await Promise.all(SUBJECTS.map(async (s, j) => {
+      const sid = subjIds[j]; if (!sid) return;
+      const secIds = await Promise.all(SECTIONS.map(sec => mk(sec, sid)));
+      SECTIONS.forEach((sec, k) => { if (secIds[k]) folders[`${c}|${s}|${sec}`] = secIds[k]; });
+    }));
+  }));
+}
 async function load() {
   if (!token && !(CFG.API_KEY && CFG.ROOT_FOLDER_ID)) {
-    $('list').innerHTML = '<div class="empty">This library is not connected yet. The owner needs to add the folder ID and API key, then sign in once.</div>'; return;
+    $('list').innerHTML = '<div class="empty">This library is not connected yet.</div>'; return;
   }
-  folders = {};
-  if (token) {
-    rootId = await fc(ROOT, 'root'); $('fid').textContent = rootId;
-    await Promise.all(Object.keys(CATS).map(async c => folders[c] = await fc(c, rootId)));
-  } else {
-    (await list(`'${CFG.ROOT_FOLDER_ID}' in parents and mimeType='${FOLD}' and trashed=false`, 'files(id,name)')).forEach(f => { if (CATS[f.name]) folders[f.name] = f.id; });
-  }
-  const parts = await Promise.all(Object.entries(folders).map(async ([c, id]) =>
-    (await list(`'${id}' in parents and trashed=false and mimeType!='${FOLD}'`, 'files(id,name,modifiedTime)')).map(f => ({...f, cat:c}))));
+  await resolveFolders();
+  const parts = await Promise.all(Object.entries(folders).map(async ([key, id]) => {
+    const fl = await list(`'${id}' in parents and trashed=false and mimeType!='${FOLD}'`, 'files(id,name,modifiedTime,mimeType,properties)');
+    return fl.map(f => ({...f, path: key === 'Other' ? ['Other'] : key.split('|')}));
+  }));
   files = parts.flat().sort((a, b) => b.modifiedTime.localeCompare(a.modifiedTime));
   render();
 }
-const start = () => load().catch(e => { $('list').innerHTML = `<div class="empty">${esc(e.message)}</div>`; });
+const start = () => { nickname(); load().catch(e => { $('list').innerHTML = `<div class="empty">${esc(e.message)}</div>`; }); };
 
-function render() {
-  const n = c => files.filter(f => f.cat === c).length;
-  $('tiles').innerHTML = [['All','SP','#14213d',files.length], ...Object.keys(CATS).map(c => [c, CATS[c][0], CATS[c][1], n(c)])]
-    .map(([c,s,col,k]) => `<button class="tile${c===cat?' on':''}" data-c="${c}" style="--c:${col}" aria-pressed="${c===cat}"><span class="n">${k}</span><span class="s">${s}</span><span class="l">${c}</span></button>`).join('');
-  const s = $('q').value.trim().toLowerCase();
-  const rows = files.filter(f => (cat === 'All' || f.cat === cat) && pretty(f.name).toLowerCase().includes(s));
-  $('list').innerHTML = rows.length ? rows.map(f => `
-    <div class="row" data-id="${f.id}" style="--c:${CATS[f.cat][1]}">
-      <span class="chip" aria-hidden="true">${CATS[f.cat][0]}</span>
-      <button class="ttl" data-a="open">${esc(pretty(f.name))}</button>
-      <span class="meta">${f.cat}<br>${new Date(f.modifiedTime).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})}</span>
-      <span class="acts adm"><button data-a="edit">Edit</button><button data-a="dl">Download</button><button data-a="rm">Delete</button></span>
-    </div>`).join('') : '<div class="empty">No lessons in this subject yet.</div>';
+/* ---- upload category dropdown ---- */
+function buildUpcat() {
+  const opts = [];
+  for (const c of CLASSES) for (const s of SUBJECTS) for (const sec of SECTIONS) opts.push(`${c}|${s}|${sec}`);
+  opts.push('Other');
+  $('upcat').innerHTML = opts.map(k => `<option value="${k}">${k === 'Other' ? 'Other' : k.replace(/\|/g,' > ')}</option>`).join('');
 }
+buildUpcat();
+
+/* ---- navigation and rendering ---- */
+function crumbLabel(i) { return i === -1 ? 'Home' : nav[i]; }
+function renderCrumb() {
+  const n = showBoard ? ['Leaderboard'] : nav;
+  $('crumb').innerHTML = ['Home', ...n].map((p, i) => `<button data-i="${i - 1}">${esc(p)}</button>`).join(' / ');
+}
+function countFor(prefix) { return files.filter(f => prefix.every((v, i) => f.path[i] === v)).length; }
+function homeTiles() {
+  return [
+    {k:'Class 9', short:'9', c:'#14213d', n: countFor(['Class 9'])},
+    {k:'Class 10', short:'10', c:'#3a2f6e', n: countFor(['Class 10'])},
+    {k:'Other', short:'Ot', c:'#6b7a90', n: countFor(['Other'])},
+    {k:'Leaderboard', short:'\ud83c\udfc6', c:'#c9962c', n: null},
+  ];
+}
+function levelTiles() {
+  if (nav.length === 1) return SUBJECTS.map(s => ({k:s, c: s === 'Physics' ? '#1f6feb' : '#0e9384', big: countFor([...nav, s])}));
+  if (nav.length === 2) return SECTIONS.map(s => ({k:s, c: s === 'IIT' ? '#d9822b' : '#6d5bd0', big: countFor([...nav, s])}));
+  return null;
+}
+function chipFor(f) {
+  if (f.properties && f.properties.type === 'quiz') return {l:'Qz', c:'#d9822b'};
+  if (/^image\//.test(f.mimeType)) return {l:'Im', c:'#5a9a1f'};
+  if (f.mimeType === 'application/pdf') return {l:'Pdf', c:'#d6476b'};
+  return {l:'Ls', c:'#1f6feb'};
+}
+function fileRows(rows, showPath) {
+  return rows.length ? rows.map(f => { const ch = chipFor(f);
+    return `<div class="row" data-id="${f.id}" style="--c:${ch.c}">
+      <span class="chip" aria-hidden="true">${ch.l}</span>
+      <button class="ttl" data-a="open">${esc(pretty(f.name))}</button>
+      <span class="meta">${showPath ? esc(f.path.join(' / ')) : ''}${showPath ? '<br>' : ''}${new Date(f.modifiedTime).toLocaleDateString(undefined,{day:'numeric',month:'short',year:'numeric'})}</span>
+      <span class="acts adm">${/html/.test(f.mimeType) ? '<button data-a="edit">Edit</button>' : ''}<button data-a="dl">Download</button><button data-a="rm">Delete</button></span>
+    </div>`; }).join('') : '<div class="empty">Nothing here yet.</div>';
+}
+async function render() {
+  renderCrumb();
+  if (showBoard) { $('tiles').innerHTML = ''; await renderBoard(); return; }
+  const s = $('q').value.trim().toLowerCase();
+  if (s) {
+    $('tiles').innerHTML = '';
+    $('list').innerHTML = fileRows(files.filter(f => pretty(f.name).toLowerCase().includes(s)), true);
+    return;
+  }
+  if (nav.length === 0) {
+    $('tiles').innerHTML = homeTiles().map(t => `<button class="tile" data-k="${t.k}" style="--c:${t.c}"><span class="n">${t.n === null ? '' : t.n}</span><span class="s">${t.short}</span><span class="l">${t.k}</span></button>`).join('');
+    $('list').innerHTML = '';
+    return;
+  }
+  if (nav[0] === 'Other' || nav.length === 3) {
+    $('tiles').innerHTML = '';
+    $('list').innerHTML = fileRows(files.filter(f => nav.every((v, i) => f.path[i] === v)), false);
+    return;
+  }
+  const t = levelTiles();
+  $('tiles').innerHTML = t.map(x => `<button class="tile" data-k="${x.k}" style="--c:${x.c}"><span class="n">${x.big}</span><span class="s">${x.k.slice(0,2)}</span><span class="l">${x.k}</span></button>`).join('');
+  $('list').innerHTML = '';
+}
+$('crumb').onclick = e => {
+  const i = e.target.dataset.i; if (i === undefined) return;
+  showBoard = false; nav = Number(i) < 0 ? [] : nav.slice(0, Number(i) + 1); $('q').value = ''; render();
+};
 $('tiles').onclick = e => {
   const b = e.target.closest('.tile'); if (!b) return;
-  cat = b.dataset.c; if (cat !== 'All') $('upcat').value = cat; render();
+  const k = b.dataset.k;
+  if (k === 'Leaderboard') { showBoard = true; render(); return; }
+  nav = [...nav, k]; render();
 };
 $('q').oninput = render;
-$('upcat').innerHTML = Object.keys(CATS).map(c => `<option>${c}</option>`).join(''); $('upcat').value = 'Other';
+
+/* ---- leaderboard ---- */
+function splitCSV(line) {
+  const out = []; let cur = '', q = false;
+  for (let i = 0; i < line.length; i++) { const c = line[i];
+    if (q) { if (c === '"') { if (line[i+1] === '"') { cur += '"'; i++; } else q = false; } else cur += c; }
+    else { if (c === '"') q = true; else if (c === ',') { out.push(cur); cur = ''; } else cur += c; } }
+  out.push(cur); return out;
+}
+async function renderBoard() {
+  if (!CFG.SHEET_CSV_URL) { $('list').innerHTML = '<div class="empty">The leaderboard is not set up yet. See setup instructions.</div>'; return; }
+  try {
+    const t = await (await fetch(CFG.SHEET_CSV_URL)).text();
+    const rows = t.trim().split('\n').slice(1).map(splitCSV).filter(r => r.length > 4);
+    rows.sort((a, b) => (Number(b[3]) / Number(b[4] || 1)) - (Number(a[3]) / Number(a[4] || 1)) || new Date(b[0]) - new Date(a[0]));
+    $('list').innerHTML = rows.length ? `<table class="board"><thead><tr><th>#</th><th>Player</th><th>Quiz</th><th>Score</th><th>When</th></tr></thead><tbody>${
+      rows.slice(0, 100).map((r, i) => `<tr><td>${i+1}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}/${esc(r[4])}</td><td>${esc(new Date(r[0]).toLocaleDateString())}</td></tr>`).join('')
+    }</tbody></table>` : '<div class="empty">No scores submitted yet.</div>';
+  } catch (e) { $('list').innerHTML = '<div class="empty">Could not load the leaderboard right now.</div>'; }
+}
+async function submitScore(f, score, total) {
+  if (!CFG.FORM_ACTION || !CFG.FORM_FIELDS.nickname) { toast(`Score ${score}/${total} (leaderboard not set up yet)`); return; }
+  const nick = nickname();
+  const body = new URLSearchParams();
+  body.set(CFG.FORM_FIELDS.nickname, nick);
+  body.set(CFG.FORM_FIELDS.quiz, pretty(f.name));
+  body.set(CFG.FORM_FIELDS.score, score);
+  body.set(CFG.FORM_FIELDS.total, total);
+  if (CFG.FORM_FIELDS.group) body.set(CFG.FORM_FIELDS.group, f.path.join(' / '));
+  try { await fetch(CFG.FORM_ACTION, {method:'POST', mode:'no-cors', body}); toast(`${nick} scored ${score}/${total}. Submitted to the leaderboard!`); }
+  catch (e) { toast('Could not submit the score. Check your connection.'); }
+}
+window.addEventListener('message', e => {
+  if (!e.data || e.data.sciphy !== 'quizResult' || !cur || !(cur.properties && cur.properties.type === 'quiz')) return;
+  submitScore(cur, e.data.score, e.data.total);
+});
 
 /* ---- owner sign in ---- */
 function signIn(id) {
@@ -183,20 +327,38 @@ function signOut() {
   token = null; document.body.classList.remove('admin'); $('mg').hidden = false; start();
 }
 $('out').onclick = signOut;
+$('ref').onclick = () => load().then(() => toast('Library refreshed')).catch(e => toast(e.message));
 
-/* ---- viewer and editor ---- */
-async function openLesson(f, edit) {
-  const t = await (await g(`${API}/files/${f.id}?alt=media`)).text();
-  cur = f; $('vt').textContent = pretty(f.name); $('code').value = t; $('frame').srcdoc = t;
-  $('view').classList.toggle('editing', !!edit); $('view').classList.add('show');
+/* ---- viewer ---- */
+async function openItem(f, edit) {
+  cur = f; curBlobUrl = null;
+  $('vt').textContent = pretty(f.name) + (f.properties && f.properties.type === 'quiz' ? ' \ud83c\udfaf' : '');
+  $('view').classList.remove('editing');
+  if (/^image\//.test(f.mimeType)) {
+    const blob = await (await g(`${API}/files/${f.id}?alt=media`)).blob();
+    curBlobUrl = URL.createObjectURL(blob);
+    $('frame').removeAttribute('src');
+    $('frame').srcdoc = `<style>html,body{margin:0;height:100%;display:grid;place-items:center;background:#111}img{max-width:100%;max-height:100vh}</style><img src="${curBlobUrl}">`;
+    $('edit').style.display = 'none'; $('code').value = '';
+  } else if (f.mimeType === 'application/pdf') {
+    const blob = await (await g(`${API}/files/${f.id}?alt=media`)).blob();
+    curBlobUrl = URL.createObjectURL(blob);
+    $('frame').srcdoc = ''; $('frame').src = curBlobUrl;
+    $('edit').style.display = 'none'; $('code').value = '';
+  } else {
+    const t = await (await g(`${API}/files/${f.id}?alt=media`)).text();
+    $('frame').removeAttribute('src'); $('code').value = t; $('frame').srcdoc = t;
+    $('edit').style.display = ''; if (edit) $('view').classList.add('editing');
+  }
+  $('view').classList.add('show');
 }
-$('close').onclick = () => { $('view').classList.remove('show', 'editing'); $('frame').srcdoc = ''; };
+$('close').onclick = () => { $('view').classList.remove('show', 'editing'); $('frame').srcdoc = ''; $('frame').removeAttribute('src'); };
 $('edit').onclick = () => $('view').classList.toggle('editing');
-$('tab').onclick = () => window.open(URL.createObjectURL(new Blob([$('code').value], {type:'text/html'})), '_blank', 'noopener');
+$('tab').onclick = () => window.open(curBlobUrl || URL.createObjectURL(new Blob([$('code').value], {type:'text/html'})), '_blank', 'noopener');
 let pv; $('code').oninput = () => { clearTimeout(pv); pv = setTimeout(() => $('frame').srcdoc = $('code').value, 300); };
 $('save').onclick = async () => {
   try {
-    if (cur.isNew) await put(cur.name, $('code').value, $('upcat').value);
+    if (cur.isNew) await putHtml(cur.name, $('code').value, cur.folderKey, cur.isQuiz);
     else await g(`${UP}/files/${cur.id}?uploadType=media`, {method:'PATCH', headers:{'Content-Type':'text/html; charset=UTF-8'}, body:$('code').value});
     toast('Saved to Drive'); if (cur.isNew) $('close').click(); await load();
   } catch (e) { toast(e.message); }
@@ -204,8 +366,10 @@ $('save').onclick = async () => {
 $('new').onclick = () => {
   const n = prompt('File name, for example newtons-laws.html'); if (!n) return;
   const name = /\.html?$/i.test(n) ? n : n + '.html';
-  const tpl = `<!DOCTYPE html>\n<html lang="en">\n<head><meta charset="utf-8"><title>${name}</title></head>\n<body>\n  <h1>New SciPhy lesson</h1>\n</body>\n</html>`;
-  cur = {name, isNew:true}; $('vt').textContent = pretty(name) + ' (new)'; $('code').value = tpl; $('frame').srcdoc = tpl;
+  const isQuiz = $('isquiz').checked;
+  const tpl = `<!DOCTYPE html>\n<html lang="en">\n<head><meta charset="utf-8"><title>${name}</title></head>\n<body>\n  <h1>New SciPhy ${isQuiz ? 'quiz' : 'lesson'}</h1>\n${isQuiz ? '  <!-- Call reportScore(yourScore, yourTotal) when the quiz ends -->\n  <script>\n  function reportScore(score, total) { parent.postMessage({ sciphy: "quizResult", score, total }, "*"); }\n  <\/script>\n' : ''}</body>\n</html>`;
+  cur = {name, isNew:true, isQuiz, folderKey: $('upcat').value};
+  $('vt').textContent = pretty(name) + ' (new)'; $('code').value = tpl; $('frame').removeAttribute('src'); $('frame').srcdoc = tpl;
   $('view').classList.add('show', 'editing');
 };
 
@@ -214,10 +378,10 @@ $('list').onclick = async e => {
   const a = e.target.dataset.a, id = e.target.closest('.row')?.dataset.id; if (!a) return;
   const f = files.find(x => x.id === id);
   try {
-    if (a === 'open') await openLesson(f); if (a === 'edit') await openLesson(f, true);
+    if (a === 'open') await openItem(f); if (a === 'edit') await openItem(f, true);
     if (a === 'dl') {
-      const t = await (await g(`${API}/files/${id}?alt=media`)).text(), l = document.createElement('a');
-      l.href = URL.createObjectURL(new Blob([t], {type:'text/html'})); l.download = f.name; l.click();
+      const blob = await (await g(`${API}/files/${id}?alt=media`)).blob(), l = document.createElement('a');
+      l.href = URL.createObjectURL(blob); l.download = f.name; l.click();
     }
     if (a === 'rm' && confirm(`Move "${pretty(f.name)}" to Drive trash?`)) {
       await g(`${API}/files/${id}`, {method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({trashed:true})});
@@ -227,16 +391,32 @@ $('list').onclick = async e => {
 };
 
 /* ---- uploads ---- */
-async function put(name, text, c) {
-  const b = 'sp' + Date.now() + Math.random().toString(36).slice(2);
-  const meta = JSON.stringify({name, parents:[folders[c]], mimeType:'text/html'});
-  await g(`${UP}/files?uploadType=multipart`, {method:'POST', headers:{'Content-Type':'multipart/related; boundary=' + b},
-    body:`--${b}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n--${b}\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n${text}\r\n--${b}--`});
+function mimeFor(name) {
+  if (/\.pdf$/i.test(name)) return 'application/pdf';
+  if (/\.png$/i.test(name)) return 'image/png';
+  if (/\.jpe?g$/i.test(name)) return 'image/jpeg';
+  if (/\.gif$/i.test(name)) return 'image/gif';
+  if (/\.webp$/i.test(name)) return 'image/webp';
+  return 'text/html';
+}
+async function putHtml(name, text, folderKey, isQuiz) {
+  const meta = {name, parents:[folders[folderKey]], mimeType:'text/html'};
+  if (isQuiz) meta.properties = {type:'quiz'};
+  const created = await (await g(`${API}/files`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(meta)})).json();
+  await g(`${UP}/files/${created.id}?uploadType=media`, {method:'PATCH', headers:{'Content-Type':'text/html; charset=UTF-8'}, body:text});
+}
+async function putFile(file, folderKey, isQuiz) {
+  const mime = mimeFor(file.name);
+  const meta = {name:file.name, parents:[folders[folderKey]], mimeType:mime};
+  if (isQuiz && mime === 'text/html') meta.properties = {type:'quiz'};
+  const created = await (await g(`${API}/files`, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(meta)})).json();
+  await g(`${UP}/files/${created.id}?uploadType=media`, {method:'PATCH', headers:{'Content-Type':mime}, body:file});
 }
 async function uploadMany(fl) {
-  const h = [...fl].filter(f => /\.html?$/i.test(f.name)), c = $('upcat').value;
-  if (!h.length) return toast('Only .html files can be uploaded.');
-  try { for (const f of h) await put(f.name, await f.text(), c); toast(`Saved ${h.length} file${h.length>1?'s':''} to ${c}`); await load(); }
+  const ok = [...fl].filter(f => /\.(html?|pdf|png|jpe?g|gif|webp)$/i.test(f.name));
+  if (!ok.length) return toast('Only .html, .pdf, and image files can be uploaded.');
+  const folderKey = $('upcat').value, isQuiz = $('isquiz').checked;
+  try { for (const f of ok) await putFile(f, folderKey, isQuiz); toast(`Saved ${ok.length} file${ok.length>1?'s':''} to ${folderKey.replace(/\|/g,' > ')}`); await load(); }
   catch (e) { toast(e.message); }
 }
 $('pick').onclick = () => $('file').click();
