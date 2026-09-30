@@ -344,13 +344,10 @@ async function openItem(f, edit) {
     $('frame').srcdoc = `<style>html,body{margin:0;height:100%;display:grid;place-items:center;background:#111}img{max-width:100%;max-height:100vh}</style><img src="${curBlobUrl}">`;
     $('edit').style.display = 'none'; $('code').value = '';
   } else if (f.mimeType === 'application/pdf') {
-    const blob = await (await g(`${API}/files/${f.id}?alt=media`)).blob();
-    curBlobUrl = URL.createObjectURL(blob); // used only by "Open in new tab"
-    const dataUrl = await new Promise((res, rej) => {
-      const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(blob);
-    });
+    // Open-in-new-tab link goes to Drive's own viewer; the inline frame uses Drive's preview page
+    curBlobUrl = `https://drive.google.com/file/d/${f.id}/view`;
     $('frame').style.display = 'none';
-    $('pdfframe').style.display = ''; $('pdfframe').src = dataUrl;
+    $('pdfframe').style.display = ''; $('pdfframe').src = `https://drive.google.com/file/d/${f.id}/preview`;
     $('edit').style.display = 'none'; $('code').value = '';
   } else {
     const t = await (await g(`${API}/files/${f.id}?alt=media`)).text();
