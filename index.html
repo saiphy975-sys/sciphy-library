@@ -381,12 +381,32 @@ $('new').onclick = () => {
   $('view').classList.add('show', 'editing');
 };
 
+/* ---- open a lesson/PDF/image directly in a new browser tab ---- */
+const QUIZ_SHIM = '<script>addEventListener("message",function(e){if(e.source===window&&e.data&&e.data.sciphy==="quizResult"&&window.opener)window.opener.postMessage(e.data,"*")});<\/script>';
+async function openTab(f) {
+  const w = window.open('', '_blank'); // opened immediately so the browser does not block it
+  if (!w) return toast('Please allow pop-ups for this site, then try again.');
+  try {
+    if (f.mimeType === 'application/pdf') { w.location.href = `https://drive.google.com/file/d/${f.id}/view`; return; }
+    cur = f;
+    const res = await g(`${API}/files/${f.id}?alt=media`);
+    let blob;
+    if (/^image\//.test(f.mimeType)) blob = await res.blob();
+    else {
+      let t = await res.text();
+      t = /<head[^>]*>/i.test(t) ? t.replace(/<head[^>]*>/i, m => m + QUIZ_SHIM) : /<html[^>]*>/i.test(t) ? t.replace(/<html[^>]*>/i, m => m + QUIZ_SHIM) : QUIZ_SHIM + t;
+      blob = new Blob([t], {type: 'text/html'});
+    }
+    w.location.href = URL.createObjectURL(blob);
+  } catch (e) { w.close(); throw e; }
+}
+
 /* ---- row actions ---- */
 $('list').onclick = async e => {
   const a = e.target.dataset.a, id = e.target.closest('.row')?.dataset.id; if (!a) return;
   const f = files.find(x => x.id === id);
   try {
-    if (a === 'open') await openItem(f); if (a === 'edit') await openItem(f, true);
+    if (a === 'open') await openTab(f); if (a === 'edit') await openItem(f, true);
     if (a === 'dl') {
       const blob = await (await g(`${API}/files/${id}?alt=media`)).blob(), l = document.createElement('a');
       l.href = URL.createObjectURL(blob); l.download = f.name; l.click();
